@@ -1,0 +1,93 @@
+graph TB
+    subgraph "Core Engine"
+        Engine[Engine<br/>Main Loop]
+        GameEngine[GameEngine<br/>Game Logic]
+        StateMgr[State Manager<br/>Menu/Play/Pause]
+        Timer[Timer<br/>Delta Time]
+    end
+    
+    subgraph "Entity System"
+        IObject[IObject<br/>Interface]
+        GameObject[GameObject<br/>Base Class]
+        Entity[Entity]
+        Player[Player]
+        Warrior[Warrior]
+        Smurf[Smurf]
+        Enemy[Enemy]
+        StaticObj[Static Objects]
+    end
+    
+    subgraph "Components"
+        Transform[Transform<br/>Position/Rotation]
+        RigidBody[RigidBody<br/>Physics]
+        Collider[Collider<br/>Collision]
+        Animation[Animation<br/>Sprites]
+    end
+    
+    subgraph "Game Systems"
+        Input[Input System<br/>Keyboard/Mouse]
+        CollisionMgr[Collision Manager<br/>Detection]
+        TextureMgr[Texture Manager<br/>Resource Cache]
+        Camera[Camera<br/>Viewport]
+        Parser[XML Parser<br/>Levels]
+    end
+    
+    subgraph "Rendering"
+        Render[Render System]
+        TileMap[Tilemap<br/>Layers]
+        Sprites[Sprite System]
+        UI[UI System<br/>Widgets]
+    end
+    
+    subgraph "Audio"
+        SoundMgr[Sound Manager<br/>SDL_mixer]
+    end
+    
+    Engine --> GameEngine
+    GameEngine --> StateMgr
+    GameEngine --> Timer
+    
+    StateMgr --> Input
+    StateMgr --> CollisionMgr
+    StateMgr --> Camera
+    
+    IObject --> GameObject
+    GameObject --> Entity
+    GameObject --> StaticObj
+    
+    Entity --> Player
+    Entity --> Warrior
+    Entity --> Smurf
+    Entity --> Enemy
+    
+    GameObject -.-> Transform
+    GameObject -.-> RigidBody
+    GameObject -.-> Collider
+    GameObject -.-> Animation
+    
+    CollisionMgr --> Collider
+    Camera --> Transform
+    
+    Render --> TileMap
+    Render --> Sprites
+    Render --> UI
+    
+    TextureMgr --> Sprites
+    Parser --> TileMap
+    
+    Input --> GameEngine
+    SoundMgr --> GameEngine
+    
+    style Engine fill:#4a90e2
+    style GameEngine fill:#4a90e2
+    style StateMgr fill:#e24a4a
+    style IObject fill:#50c878
+    style GameObject fill:#50c878
+    style Transform fill:#f5a623
+    style RigidBody fill:#f5a623
+    style Collider fill:#f5a623
+    style Animation fill:#f5a623
+    style CollisionMgr fill:#9b59b6
+    style TextureMgr fill:#9b59b6
+    style Camera fill:#9b59b6
+    style Render fill:#e67e22
